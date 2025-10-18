@@ -8,11 +8,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Init submodules
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
+          git submodule status
+
+      - name: Verify vendored Servo exists
+        run: |
+          ls -la lib || true
+          test -f lib/Servo/src/Servo.h || (echo "Servo submodule missing"; exit 1)
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+
       - name: Install PlatformIO
         run: pip install platformio
+
       - name: Build (UNO)
         run: pio run -e uno
+
+      - name: Export compile_commands
+        run: pio run -e uno -t compiledb
