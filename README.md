@@ -31,3 +31,9 @@ pio run -t upload
 # monitor serial
 pio device monitor -b 9600
 ```
+
+## Scehmatics
+
+Note: this is not final, I can't find the actual schematic since this is a highschool project and it's lost somewhere, rip.
+
+[![Schematic](docs/schematic.png)](docs/schematic.png)
